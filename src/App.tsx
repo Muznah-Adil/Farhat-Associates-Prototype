@@ -193,7 +193,7 @@ function Strip() {
 
 /* ─── PRACTICE ─── */
 const practices = [
-  { letter: 'R', kicker: 'Purchase · Sale · Refinance', title: 'Real Estate', body: 'Residential and commercial transactions closed with precision — title, financing, and development matters handled start to finish, communicated without jargon.', cta: 'Discuss a transaction' },
+  { letter: 'R', kicker: 'Purchase · Sale', title: 'Real Estate', body: 'Residential and commercial transactions closed with precision — title, financing, and development matters handled start to finish, communicated without jargon.', cta: 'Discuss a transaction' },
   { letter: 'C', kicker: 'Formation · Governance · Contracts', title: 'Corporate', body: "Incorporations, shareholder agreements, and commercial contracts — structured deliberately, so your business holds up when it's tested.", cta: 'Structure your business' },
   { letter: 'L', kicker: 'Property · Commercial · Contract', title: 'Litigation', body: 'Disputes advanced with strategy and restraint — resolved at the table where possible, and pursued to trial when it counts.', cta: 'Resolve a dispute' },
 ]
