@@ -61,6 +61,19 @@ a { color: inherit; text-decoration: none; }
 }
 
 
+/* full scope of practice index */
+.scope { margin-top: 88px; border-top: 1px solid var(--line-faint); padding-top: 56px; }
+.scope-list {
+  list-style: none; margin-top: 40px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 56px;
+}
+.scope-list li {
+  font-size: 12px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--grey); line-height: 1.7;
+  padding-left: 20px; position: relative;
+}
+.scope-list li::before { content: "•"; position: absolute; left: 0; color: var(--grey-dim); }
+
 /* burger + mobile menu (desktop: hidden) */
 .burger { display: none; }
 .mobile-menu {
@@ -127,6 +140,10 @@ a { color: inherit; text-decoration: none; }
   .practice-head h2 { font-size: 36px !important; }
   .practice-head h2 br { display: none; } /* let the line break fall naturally */
   .practice-head > div:last-child { font-size: 13px !important; }
+
+  /* scope index — single column */
+  .scope { margin-top: 64px; padding-top: 44px; }
+  .scope-list { grid-template-columns: 1fr !important; gap: 14px !important; }
 
   /* principal — copy container matches the portrait's column; text stays left-aligned */
   .principal-grid { grid-template-columns: 1fr !important; gap: 44px !important; }

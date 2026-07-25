@@ -268,6 +268,30 @@ function Practice({ onSelectMatter }: { onSelectMatter: (matter: string) => void
         <div className="practice-grid">
           {practices.map(p => <PracticeCard key={p.title} {...p} onSelect={() => onSelectMatter(p.title)} />)}
         </div>
+
+        {/* full scope — Rashid Farhat's stated areas of practice, verbatim */}
+        <div className="scope">
+          <Eyebrow>Full Scope of Practice</Eyebrow>
+          <ul className="scope-list">
+            {[
+              'Residential & Commercial Real Estate Transactions',
+              'Business Law',
+              'Commercial Real Estate',
+              'Corporate Reorganizations',
+              'Business Acquisitions and Sales',
+              'Secured and Unsecured Financing Transactions',
+              'Commercial Contract Negotiations',
+              'Mortgages',
+              'Mortgage Remedies & Enforcement',
+              'Expropriation Law',
+              'Ontario Municipal Board Matters',
+              'Land Development — Rezoning & Site Plan Control',
+              'Tenancies and Lease Agreements',
+              'Municipal Law',
+              'Wills and Trusts',
+            ].map(s => <li key={s}>{s}</li>)}
+          </ul>
+        </div>
       </div>
     </section>
   )
