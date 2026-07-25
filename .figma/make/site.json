@@ -1,0 +1,10 @@
+{
+  "description": "Offers a simple, user-friendly platform that fulfills your specific needs efficiently, enhancing productivity and ease of use for all users.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
