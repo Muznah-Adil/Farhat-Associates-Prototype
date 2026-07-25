@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import logoSrc from '@/imports/logo'
 import heroBg from '@/imports/bg.jpg'
 
@@ -48,34 +48,66 @@ function Tick() {
 
 /* ─── NAV ─── */
 function Nav() {
+  const [open, setOpen] = useState(false)
+  const [atFooter, setAtFooter] = useState(false)
+  const links: [string, string][] = [['Practice', '#practice'], ['The Firm', '#the-firm'], ['Reviews', '#reviews'], ['Contact', '#contact']]
+
+  // hide the floating burger once the footer scrolls into view
+  useEffect(() => {
+    const footer = document.querySelector('footer')
+    if (!footer) return
+    const obs = new IntersectionObserver(([entry]) => setAtFooter(entry.isIntersecting), { threshold: 0 })
+    obs.observe(footer)
+    return () => obs.disconnect()
+  }, [])
   return (
     <header style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 50 }}>
-      <nav style={{
+      <nav className="site-nav" style={{
         display: 'flex', alignItems: 'center', gap: 56,
         padding: '34px 56px 0', maxWidth: 1520, margin: '0 auto',
       }}>
-        <a href="#top" style={{ flexShrink: 0 }}>
-          <img src={logoSrc} alt="Farhat & Associates" style={{ height: 72, width: 'auto', display: 'block' }} />
+        {/* burger — mobile only (CSS controls visibility) */}
+        <button className={`burger${atFooter ? ' burger-hidden' : ''}`} aria-label="Open menu" onClick={() => setOpen(true)}>
+          <span /><span /><span />
+        </button>
+
+        <a href="#top" className="nav-logo-link" style={{ flexShrink: 0 }}>
+          <img className="nav-logo" src={logoSrc} alt="Farhat & Associates" style={{ height: 72, width: 'auto', display: 'block' }} />
         </a>
-        <div style={{
+
+        <div className="nav-links" style={{
           display: 'flex', flex: 1, justifyContent: 'center',
           gap: 'clamp(28px,4vw,64px)',
           fontSize: 11.5, letterSpacing: '0.32em', textTransform: 'uppercase',
         }}>
-          {[['Practice', '#practice'], ['The Firm', '#the-firm'], ['Reviews', '#reviews'], ['Contact', '#contact']].map(([l, h]) => (
-            <a key={l} href={h}
+          {links.map(([l, href]) => (
+            <a key={l} href={href}
               style={{ paddingBottom: 5, borderBottom: '1px solid transparent', opacity: 0.85, transition: 'opacity .3s,border-color .3s', color: C.white }}
               onMouseEnter={e => { const el = e.currentTarget; el.style.opacity = '1'; el.style.borderColor = C.line }}
               onMouseLeave={e => { const el = e.currentTarget; el.style.opacity = '0.85'; el.style.borderColor = 'transparent' }}
             >{l}</a>
           ))}
         </div>
-        <a href="#contact"
+
+        <a className="nav-cta" href="#contact"
           style={{ border: `1px solid ${C.line}`, color: C.white, padding: '13px 28px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', whiteSpace: 'nowrap', transition: 'background .3s,color .3s,border-color .3s' }}
           onMouseEnter={e => { const el = e.currentTarget; el.style.background = C.white; el.style.color = C.black; el.style.borderColor = C.white }}
           onMouseLeave={e => { const el = e.currentTarget; el.style.background = 'transparent'; el.style.color = C.white; el.style.borderColor = C.line }}
         >519 · 255 · 4382</a>
       </nav>
+
+      {/* mobile menu overlay */}
+      {open && (
+        <div className="mobile-menu">
+          <button className="mobile-menu-close" aria-label="Close menu" onClick={() => setOpen(false)}>✕</button>
+          <nav>
+            {links.map(([l, href]) => (
+              <a key={l} href={href} onClick={() => setOpen(false)}>{l}</a>
+            ))}
+          </nav>
+          <a className="mobile-menu-phone" href="tel:5192554382">519 · 255 · 4382</a>
+        </div>
+      )}
     </header>
   )
 }
@@ -88,15 +120,15 @@ function Hero() {
       background: `linear-gradient(180deg,rgba(5,5,5,.55) 0%,rgba(5,5,5,.72) 60%,rgba(5,5,5,.95) 100%), url(${heroBg}) center/cover no-repeat`,
     }}>
       {/* architectural frame */}
-      <div style={{ position: 'absolute', inset: '150px 28px 28px', pointerEvents: 'none' }}>
+      <div className="hero-frame" style={{ position: 'absolute', inset: '150px 28px 28px', pointerEvents: 'none' }}>
         <Tick />
       </div>
 
-      <div style={{ position: 'relative', padding: '210px 0 150px', maxWidth: 920, margin: '0 auto', textAlign: 'center', width: '100%' }}>
+      <div className="hero-inner" style={{ position: 'relative', padding: '210px 0 150px', maxWidth: 920, margin: '0 auto', textAlign: 'center', width: '100%' }}>
         <Eyebrow center>Windsor, Ontario · Law Office</Eyebrow>
 
         {/* typographic plaque */}
-        <svg viewBox="0 0 860 358" role="img" aria-label="Counsel that holds — in deals and in disputes"
+        <svg className="plaque" viewBox="0 0 860 358" role="img" aria-label="Counsel that holds — in deals and in disputes"
           style={{ width: '100%', maxWidth: 580, margin: '44px auto 0', display: 'block' }}>
           <line x1="0" y1="4" x2="860" y2="4" stroke={C.line} strokeWidth="2" />
           <text x="0" y="168" textLength="860" lengthAdjust="spacing" fontSize="176"
@@ -214,14 +246,14 @@ function Practice({ onSelectMatter }: { onSelectMatter: (matter: string) => void
       borderTop: `1px solid ${C.lineFaint}`,
       borderBottom: `1px solid ${C.lineFaint}`,
     }}>
-      <span style={{
+      <span className="rail" style={{
         position: 'absolute', left: 14, top: '50%', transform: 'rotate(180deg) translateY(50%)',
         writingMode: 'vertical-rl', fontSize: 10, letterSpacing: '0.5em',
         textTransform: 'uppercase', color: C.greyDim, whiteSpace: 'nowrap',
       }}>Areas of Practice — Farhat &amp; Associates</span>
 
-      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px', position: 'relative' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'end', gap: 40, marginBottom: 80 }}>
+      <div className="wrap" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px', position: 'relative' }}>
+        <div className="practice-head" style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'end', gap: 40, marginBottom: 80 }}>
           <div>
             <Eyebrow>Areas of Practice</Eyebrow>
             <h2 style={{ fontFamily: "'Marcellus',serif", fontSize: 'clamp(38px,4.6vw,60px)', margin: '26px 0 22px', lineHeight: 1.12 }}>
@@ -248,7 +280,7 @@ function QuoteBand() {
       padding: '170px 0', textAlign: 'center', position: 'relative',
       background: `radial-gradient(900px 480px at 50% 50%,rgba(255,255,255,.045),transparent 65%),${C.black}`,
     }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
+      <div className="wrap" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
         <span aria-hidden="true" style={{
           fontFamily: "'Marcellus',serif", fontSize: 130, lineHeight: 0.4,
           color: 'rgba(255,255,255,.14)', display: 'block', marginBottom: 34,
@@ -277,8 +309,8 @@ function Principal() {
       borderTop: `1px solid ${C.lineFaint}`,
       borderBottom: `1px solid ${C.lineFaint}`,
     }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '460px 1fr', gap: 100, alignItems: 'center' }}>
+      <div className="wrap" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
+        <div className="principal-grid" style={{ display: 'grid', gridTemplateColumns: '460px 1fr', gap: 100, alignItems: 'center' }}>
           {/* portrait */}
           <div style={{
             aspectRatio: '4/5', position: 'relative',
@@ -293,7 +325,7 @@ function Principal() {
           </div>
 
           {/* copy */}
-          <div>
+          <div className="principal-copy">
             <Eyebrow>The Firm</Eyebrow>
             <h2 style={{ fontFamily: "'Marcellus',serif", fontSize: 'clamp(34px,4vw,52px)', margin: '24px 0 26px', lineHeight: 1.14 }}>
               Counsel you deal with directly.
@@ -313,7 +345,7 @@ function Principal() {
             </div>
 
             {/* credentials */}
-            <div style={{ display: 'flex', marginTop: 48, borderTop: `1px solid ${C.lineFaint}` }}>
+            <div className="credentials" style={{ display: 'flex', marginTop: 48, borderTop: `1px solid ${C.lineFaint}` }}>
               {['Law Society of Ontario', 'Windsor–Essex', 'Serving clients since 2015'].map((item, i, arr) => (
                 <div key={item} style={{
                   padding: '26px 36px 0 0', marginRight: 36,
@@ -333,13 +365,13 @@ function Principal() {
 function Reviews() {
   return (
     <section id="reviews" style={{ padding: '150px 0', position: 'relative' }}>
-      <span style={{
+      <span className="rail" style={{
         position: 'absolute', right: 14, top: '50%',
         writingMode: 'vertical-rl', fontSize: 10, letterSpacing: '0.5em',
         textTransform: 'uppercase', color: C.greyDim, whiteSpace: 'nowrap',
       }}>Client Perspectives — On the Record</span>
 
-      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
+      <div className="wrap" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
         {/* section head */}
         <div style={{ marginBottom: 80 }}>
           <Eyebrow>Client Perspectives</Eyebrow>
@@ -356,7 +388,7 @@ function Reviews() {
           borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.lineFaint}`,
           padding: '64px 0', marginBottom: 72,
           display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 64, alignItems: 'start',
-        }}>
+        }} className="review-feature">
           <div style={{ fontSize: 15, letterSpacing: '0.4em', color: C.white, paddingTop: 12 }}>★★★★★</div>
           <div>
             <blockquote style={{ fontFamily: "'Marcellus',serif", fontSize: 'clamp(24px,2.8vw,36px)', lineHeight: 1.4, marginBottom: 26 }}>
@@ -367,7 +399,7 @@ function Reviews() {
         </div>
 
         {/* review grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80 }}>
+        <div className="review-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80 }}>
           {[
             { body: "I've used this real estate law firm for my last two home purchases and couldn't be happier. They take the time to explain everything in detail, which made the entire process smooth and stress-free.", cite: 'Ronald J. — Real Estate Client' },
             { body: 'Excellent experiences for several business-related legal matters. At all times, the team was extremely professional, efficient, and easy to work with.', cite: 'Kirk R. — Business Client' },
@@ -414,8 +446,8 @@ function Contact({ form, setForm }: {
 
   return (
     <section id="contact" style={{ padding: '150px 0', background: C.panel, borderTop: `1px solid ${C.lineFaint}` }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 520px', gap: 110, alignItems: 'start' }}>
+      <div className="wrap" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
+        <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 520px', gap: 110, alignItems: 'start' }}>
           {/* left info */}
           <div>
             <Eyebrow>Contact</Eyebrow>
@@ -427,7 +459,7 @@ function Contact({ form, setForm }: {
             </p>
             <ul style={{ listStyle: 'none', marginTop: 56 }}>
               {contactItems.map(item => (
-                <li key={item.label} style={{
+                <li key={item.label} className="contact-li" style={{
                   display: 'grid', gridTemplateColumns: '130px 1fr', gap: 24,
                   borderBottom: `1px solid ${C.lineFaint}`, padding: '24px 0',
                   fontSize: 16, alignItems: 'baseline',
@@ -440,7 +472,7 @@ function Contact({ form, setForm }: {
           </div>
 
           {/* form panel */}
-          <div style={{ background: C.black, padding: '56px 52px', position: 'relative' }}>
+          <div className="form-panel" style={{ background: C.black, padding: '56px 52px', position: 'relative' }}>
             <Tick />
             {sent ? (
               <div style={{ textAlign: 'center', padding: '64px 0' }}>
@@ -505,14 +537,15 @@ function Footer() {
         color: 'rgba(255,255,255,.03)', whiteSpace: 'nowrap', userSelect: 'none', pointerEvents: 'none',
       }}>FARHAT &amp; ASSOCIATES</div>
 
-      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px', position: 'relative' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 48, flexWrap: 'wrap', marginBottom: 80 }}>
-          <img src={logoSrc} alt="Farhat & Associates" style={{ height: 64, width: 'auto', display: 'block' }} />
+      <div className="wrap" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px', position: 'relative' }}>
+        <div className="footer-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 48, flexWrap: 'wrap', marginBottom: 80 }}>
+          <img className="footer-logo" src={logoSrc} alt="Farhat & Associates" style={{ height: 64, width: 'auto', display: 'block' }} />
 
           {[
             { head: 'Practice', links: [['Real Estate', '#practice'], ['Corporate', '#practice'], ['Litigation', '#practice']] },
             { head: 'Firm', links: [['Rashid Farhat', '#the-firm'], ['Client Reviews', '#reviews'], ['Consultations', '#contact']] },
-            { head: 'Office', links: [['1 Hanna St W.', null], ['Windsor, ON N8X 1C7', null], ['519 · 255 · 4382', null], ['info@farhatlaw.ca', null]] },
+            { head: 'Office', links: [['1 Hanna St W.', null], ['Windsor, ON N8X 1C7', null], ['519 · 255 · 4382', null], ['info@farhatlaw.ca', 'mailto:info@farhatlaw.ca']] },
+            { head: 'Connect', links: [['farhatlaw.ca', 'https://www.farhatlaw.ca'], ['Facebook', 'https://facebook.com/windsorlawyer'], ['rfarhat@farhatlaw.ca', 'mailto:rfarhat@farhatlaw.ca']] },
           ].map(col => (
             <div key={col.head}>
               <div style={{ fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: C.greyDim, marginBottom: 20 }}>{col.head}</div>
@@ -528,10 +561,9 @@ function Footer() {
           ))}
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', position: 'relative', borderTop: `1px solid ${C.lineFaint}`, paddingTop: 32, fontSize: 12, color: C.greyDim }}>
+        <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', position: 'relative', borderTop: `1px solid ${C.lineFaint}`, paddingTop: 32, fontSize: 12, color: C.greyDim }}>
           <span>© 2026 Farhat &amp; Associates Law Firm</span>
-          <span>Real Estate · Corporate · Litigation — Windsor, Ontario</span>
-          <span>Design prototype</span>
+          <span className="footer-tagline">Real Estate · Corporate · Litigation — Windsor, Ontario</span>
         </div>
       </div>
     </footer>
