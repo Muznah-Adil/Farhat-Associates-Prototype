@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import logoSrc from '@/imports/logo'
 import heroBg from '@/imports/Bg.jpg'
 import quoteBg from '@/imports/Quote-bg.jpg'
+import footerBg from '@/imports/footer.jpg'
 import realEstateBg from '@/imports/Realestate.jpg'
 import corporateBg from '@/imports/Corporate.jpg'
 import litigationBg from '@/imports/Litigation.jpg'
@@ -551,7 +552,11 @@ function Contact({ form, setForm }: {
 /* ─── FOOTER ─── */
 function Footer() {
   return (
-    <footer style={{ padding: '110px 0 50px', color: C.grey, position: 'relative', overflow: 'hidden', borderTop: `1px solid ${C.lineFaint}` }}>
+    <footer style={{
+      padding: '110px 0 50px', color: C.grey, position: 'relative', overflow: 'hidden',
+      borderTop: `1px solid ${C.lineFaint}`,
+      background: `linear-gradient(180deg, rgba(5,5,5,.9) 0%, rgba(5,5,5,.86) 55%, rgba(5,5,5,.94) 100%), url(${footerBg}) center / cover no-repeat`,
+    }}>
       <div aria-hidden="true" style={{
         position: 'absolute', left: '50%', bottom: '-4%', transform: 'translateX(-50%)',
         fontFamily: "'Marcellus',serif", fontSize: 'min(13vw,170px)', lineHeight: 1, letterSpacing: '0.06em',
