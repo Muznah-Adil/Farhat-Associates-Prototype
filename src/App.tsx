@@ -3,6 +3,7 @@ import logoSrc from '@/imports/logo'
 import heroBg from '@/imports/Bg.jpg'
 import quoteBg from '@/imports/Quote-bg.jpg'
 import footerBg from '@/imports/footer.jpg'
+import portraitSrc from '@/imports/Rashid-Farhat.jpg'
 import realEstateBg from '@/imports/Realestate.jpg'
 import corporateBg from '@/imports/Corporate.jpg'
 import litigationBg from '@/imports/Litigation.jpg'
@@ -240,7 +241,7 @@ function Practice({ onSelectMatter }: { onSelectMatter: (matter: string) => void
   return (
     <section id="practice" style={{
       padding: '150px 0', position: 'relative',
-      background: C.panel,
+      background: C.black,
       borderTop: `1px solid ${C.lineFaint}`,
       borderBottom: `1px solid ${C.lineFaint}`,
     }}>
@@ -327,23 +328,20 @@ function Principal() {
   return (
     <section id="the-firm" style={{
       padding: '150px 0', position: 'relative',
-      background: C.panel,
+      background: C.black,
       borderTop: `1px solid ${C.lineFaint}`,
       borderBottom: `1px solid ${C.lineFaint}`,
     }}>
       <div className="wrap" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
         <div className="principal-grid" style={{ display: 'grid', gridTemplateColumns: '460px 1fr', gap: 100, alignItems: 'center' }}>
           {/* portrait */}
-          <div style={{
-            aspectRatio: '4/5', position: 'relative',
-            background: `radial-gradient(440px 340px at 50% 22%,rgba(255,255,255,.07),transparent 70%),linear-gradient(168deg,#161616 0%,#090909 100%)`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
+          <div style={{ aspectRatio: '4/5', position: 'relative', background: '#0A0A0A' }}>
             <Tick />
-            <span style={{ fontFamily: "'Marcellus',serif", fontSize: 150, color: 'rgba(255,255,255,.10)', letterSpacing: '0.04em' }}>RF</span>
-            <div style={{ position: 'absolute', bottom: 20, left: 0, right: 0, textAlign: 'center', fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase', color: C.greyDim }}>
-              Portrait — Rashid Farhat
-            </div>
+            <img
+              src={portraitSrc}
+              alt="Rashid Farhat, Founder of Farhat & Associates Law Firm"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 22%', display: 'block' }}
+            />
           </div>
 
           {/* copy */}
@@ -386,7 +384,7 @@ function Principal() {
 /* ─── REVIEWS ─── */
 function Reviews() {
   return (
-    <section id="reviews" style={{ padding: '150px 0', position: 'relative' }}>
+    <section id="reviews" style={{ padding: '150px 0', position: 'relative', background: C.panel, borderTop: `1px solid ${C.lineFaint}`, borderBottom: `1px solid ${C.lineFaint}` }}>
       <span className="rail" style={{
         position: 'absolute', right: 14, top: '50%',
         writingMode: 'vertical-rl', fontSize: 10, letterSpacing: '0.5em',
@@ -463,7 +461,7 @@ function Contact({ form, setForm }: {
   ]
 
   return (
-    <section id="contact" style={{ padding: '150px 0', background: C.panel, borderTop: `1px solid ${C.lineFaint}` }}>
+    <section id="contact" style={{ padding: '150px 0', background: C.black, borderTop: `1px solid ${C.lineFaint}` }}>
       <div className="wrap" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
         <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 520px', gap: 110, alignItems: 'start' }}>
           {/* left info */}
@@ -494,7 +492,7 @@ function Contact({ form, setForm }: {
           </div>
 
           {/* form panel */}
-          <div className="form-panel" style={{ background: C.black, padding: '56px 52px', position: 'relative' }}>
+          <div className="form-panel" style={{ background: C.panel, padding: '56px 52px', position: 'relative' }}>
             <Tick />
             {sent ? (
               <div style={{ textAlign: 'center', padding: '64px 0' }}>
