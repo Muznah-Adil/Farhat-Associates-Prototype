@@ -61,6 +61,20 @@ a { color: inherit; text-decoration: none; }
 }
 
 
+/* page-load entrance — whole page fades, hero elements rise in sequence */
+@keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes riseFade {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .app-root { animation: pageFade .9s ease both; }
+  .hero-inner > * { animation: riseFade .85s ease both; }
+  .hero-inner > *:nth-child(1) { animation-delay: .3s; }  /* eyebrow */
+  .hero-inner > *:nth-child(2) { animation-delay: .5s; }  /* plaque */
+  .hero-inner > *:nth-child(3) { animation-delay: .7s; }  /* CTAs */
+}
+
 /* full scope of practice index */
 .scope { margin-top: 88px; border-top: 1px solid var(--line-faint); padding-top: 56px; }
 .scope-list {
@@ -73,6 +87,17 @@ a { color: inherit; text-decoration: none; }
   padding-left: 20px; position: relative;
 }
 .scope-list li::before { content: "•"; position: absolute; left: 0; color: var(--grey-dim); }
+
+/* review marquee — continuous right-to-left row; pauses on hover */
+.review-marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line-faint); padding: 56px 0; }
+.review-track { display: flex; width: max-content; animation: marquee 80s linear infinite; }
+.review-marquee:hover .review-track { animation-play-state: paused; }
+.review-card {
+  width: 420px; flex-shrink: 0; margin-right: 72px;
+  padding-left: 28px; border-left: 1px solid var(--line-faint);
+  display: flex; flex-direction: column;
+}
+@media (prefers-reduced-motion: reduce) { .review-track { animation: none; flex-wrap: wrap; } }
 
 /* burger + mobile menu (desktop: hidden) */
 .burger { display: none; }
@@ -121,9 +146,9 @@ a { color: inherit; text-decoration: none; }
 
   /* hero — fits a single phone screen, scroll arrow visible */
   #top { min-height: 100vh !important; min-height: 100svh !important; }
-  #top .hero-inner { padding: 104px 26px 96px !important; }
+  #top .hero-inner { padding: 104px 26px 120px !important; }
   .plaque { max-width: 340px !important; margin-top: 30px !important; }
-  .hero-frame { inset: 88px 14px 14px !important; }
+  .hero-frame { inset: 88px 14px 84px !important; }
   .hero-inner > div:last-of-type { margin-top: 38px !important; gap: 18px !important; }
   .hero-inner > div:last-of-type a:first-child { padding: 15px 32px !important; }
   #top > div:last-of-type { bottom: 16px !important; }
@@ -154,9 +179,10 @@ a { color: inherit; text-decoration: none; }
   .credentials { flex-wrap: wrap !important; row-gap: 6px; }
   .credentials > div { border-right: none !important; margin-right: 24px !important; padding: 18px 0 0 !important; }
 
-  /* reviews */
-  .review-feature { grid-template-columns: 1fr !important; gap: 18px !important; padding: 44px 0 !important; }
-  .review-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+  /* reviews marquee */
+  .review-marquee { padding: 40px 0; }
+  .review-card { width: 290px; margin-right: 44px; padding-left: 20px; }
+  .review-card blockquote { font-size: 16.5px !important; }
 
   /* footer */
   .footer-top {
@@ -179,5 +205,5 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 400px) {
   .nav-logo { height: 40px !important; }
   .plaque { max-width: 290px !important; }
-  #top .hero-inner { padding: 96px 22px 88px !important; }
+  #top .hero-inner { padding: 96px 22px 112px !important; }
 }

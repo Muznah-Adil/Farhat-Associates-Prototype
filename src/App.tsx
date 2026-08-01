@@ -50,7 +50,7 @@ function Tick() {
 function Nav() {
   const [open, setOpen] = useState(false)
   const [atFooter, setAtFooter] = useState(false)
-  const links: [string, string][] = [['Practice', '#practice'], ['The Firm', '#the-firm'], ['Reviews', '#reviews'], ['Contact', '#contact']]
+  const links: [string, string][] = [['Home', '#top'], ['Practice Area', '#practice'], ['About Us', '#the-firm'], ['Testimonials', '#reviews'], ['Contact', '#contact']]
 
   // hide the floating burger once the footer scrolls into view
   useEffect(() => {
@@ -89,7 +89,7 @@ function Nav() {
           ))}
         </div>
 
-        <a className="nav-cta" href="#contact"
+        <a className="nav-cta" href="tel:5192554382"
           style={{ border: `1px solid ${C.line}`, color: C.white, padding: '13px 28px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', whiteSpace: 'nowrap', transition: 'background .3s,color .3s,border-color .3s' }}
           onMouseEnter={e => { const el = e.currentTarget; el.style.background = C.white; el.style.color = C.black; el.style.borderColor = C.white }}
           onMouseLeave={e => { const el = e.currentTarget; el.style.background = 'transparent'; el.style.color = C.white; el.style.borderColor = C.line }}
@@ -155,8 +155,8 @@ function Hero() {
         </div>
       </div>
 
-      <div style={{ position: 'absolute', left: 0, right: 0, bottom: 38, display: 'flex', justifyContent: 'center' }}>
-        <span style={{ fontSize: 26, color: C.grey, display: 'block', animation: 'bob 2s ease-in-out infinite' }}>↓</span>
+      <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, background: 'rgba(5,5,5,.6)', backdropFilter: 'blur(4px)' }}>
+        <Strip />
       </div>
     </section>
   )
@@ -407,35 +407,31 @@ function Reviews() {
           </p>
         </div>
 
-        {/* feature review */}
-        <div style={{
-          borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.lineFaint}`,
-          padding: '64px 0', marginBottom: 72,
-          display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 64, alignItems: 'start',
-        }} className="review-feature">
-          <div style={{ fontSize: 15, letterSpacing: '0.4em', color: C.white, paddingTop: 12 }}>★★★★★</div>
-          <div>
-            <blockquote style={{ fontFamily: "'Marcellus',serif", fontSize: 'clamp(24px,2.8vw,36px)', lineHeight: 1.4, marginBottom: 26 }}>
-              &ldquo;They&apos;ve guided us so many times through real estate transactions as well as other matters, from maintaining our corporate minute books to litigation matters. Fantastic team!&rdquo;
-            </blockquote>
-            <cite style={{ fontStyle: 'normal', fontSize: 11, letterSpacing: '0.36em', textTransform: 'uppercase', color: C.grey }}>Marla C. — Google Review</cite>
+        {/* review marquee — one continuous row sliding right to left */}
+        <div className="review-marquee" aria-label="Client reviews">
+          <div className="review-track">
+            {(() => {
+              const reviews = [
+                { body: "They've guided us so many times through real estate transactions as well as other matters, from maintaining our corporate minute books to litigation matters. Fantastic team!", cite: 'Marla C.' },
+                { body: "I've used this real estate law firm for my last two home purchases and couldn't be happier. They take the time to explain everything in detail, which made the entire process smooth and stress-free.", cite: 'Ronald J.' },
+                { body: 'Excellent experiences for several business-related legal matters. At all times, the team was extremely professional, efficient, and easy to work with.', cite: 'Kirk R.' },
+                { body: 'Rashid has been the lawyer my clients and I have trusted for over 10 years. He is extremely professional, thorough, and patient.', cite: 'Maggie L.' },
+                { body: 'Professional, knowledgeable, thorough, prompt communication, attention to detail, honest, and outstanding service from start to finish!', cite: 'Nancy P.' },
+                { body: 'Rashid and his staff were great! The entire process of closing our house was quick and efficient.', cite: 'Chris M.' },
+                { body: 'Made the whole process incredibly easy, simple, and stress-free. Excellent communication and amazing service from start to finish.', cite: 'Sreang M.' },
+                { body: 'Rashid has guided us through complex real estate transactions and has been a trusted ally throughout the entire process.', cite: 'Glenn P.' },
+              ]
+              return [...reviews, ...reviews].map((r, i) => (
+                <div className="review-card" key={`${r.cite}-${i}`} aria-hidden={i >= reviews.length}>
+                  <div style={{ color: C.grey, letterSpacing: '0.34em', fontSize: 12, marginBottom: 18 }}>★★★★★</div>
+                  <blockquote style={{ fontFamily: "'Marcellus',serif", fontSize: 19, lineHeight: 1.5, marginBottom: 20 }}>
+                    &ldquo;{r.body}&rdquo;
+                  </blockquote>
+                  <cite style={{ fontStyle: 'normal', color: C.greyDim, fontSize: 10.5, letterSpacing: '0.3em', textTransform: 'uppercase' }}>{r.cite} — Google Review</cite>
+                </div>
+              ))
+            })()}
           </div>
-        </div>
-
-        {/* review grid */}
-        <div className="review-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80 }}>
-          {[
-            { body: "I've used this real estate law firm for my last two home purchases and couldn't be happier. They take the time to explain everything in detail, which made the entire process smooth and stress-free.", cite: 'Ronald J. — Real Estate Client' },
-            { body: 'Excellent experiences for several business-related legal matters. At all times, the team was extremely professional, efficient, and easy to work with.', cite: 'Kirk R. — Business Client' },
-          ].map(r => (
-            <div key={r.cite} style={{ borderTop: `1px solid ${C.lineFaint}`, paddingTop: 32 }}>
-              <div style={{ color: C.grey, letterSpacing: '0.34em', fontSize: 12, marginBottom: 20 }}>★★★★★</div>
-              <blockquote style={{ fontFamily: "'Marcellus',serif", fontSize: 20, lineHeight: 1.55, marginBottom: 22 }}>
-                &ldquo;{r.body}&rdquo;
-              </blockquote>
-              <cite style={{ fontStyle: 'normal', color: C.greyDim, fontSize: 10.5, letterSpacing: '0.3em', textTransform: 'uppercase' }}>{r.cite}</cite>
-            </div>
-          ))}
         </div>
 
         <div style={{ marginTop: 64, color: C.greyDim, fontSize: 10.5, letterSpacing: '0.26em', textTransform: 'uppercase' }}>
@@ -460,11 +456,11 @@ function Contact({ form, setForm }: {
     padding: '9px 0', outline: 'none',
   }
 
-  const contactItems = [
-    { label: 'Office', value: '1 Hanna St W., Windsor, ON N8X 1C7' },
-    { label: 'Phone', value: '519 · 255 · 4382' },
-    { label: 'Fax', value: '519 · 915 · 7349' },
-    { label: 'Email', value: 'info@farhatlaw.ca' },
+  const contactItems: { label: string; value: string; href?: string }[] = [
+    { label: 'Office', value: '1 Hanna St W., Windsor, ON N8X 1C7', href: 'https://www.google.com/maps?cid=12618145535706963737' },
+    { label: 'Phone', value: '519 · 255 · 4382', href: 'tel:5192554382' },
+    { label: 'Fax', value: '519 · 915 · 7349', href: 'tel:5199157349' },
+    { label: 'Email', value: 'info@farhatlaw.ca', href: 'mailto:info@farhatlaw.ca' },
     { label: 'Hours', value: 'Monday – Friday · 9 a.m. – 5 p.m.' },
   ]
 
@@ -489,7 +485,11 @@ function Contact({ form, setForm }: {
                   fontSize: 16, alignItems: 'baseline',
                 }}>
                   <span style={{ color: C.greyDim, fontSize: 10.5, letterSpacing: '0.34em', textTransform: 'uppercase' }}>{item.label}</span>
-                  <span style={{ color: C.white }}>{item.value}</span>
+                  <span style={{ color: C.white }}>
+                    {item.href
+                      ? <a href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" style={{ color: C.white }}>{item.value}</a>
+                      : item.value}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -568,7 +568,7 @@ function Footer() {
           {[
             { head: 'Practice', links: [['Real Estate', '#practice'], ['Corporate', '#practice'], ['Litigation', '#practice']] },
             { head: 'Firm', links: [['Rashid Farhat', '#the-firm'], ['Client Reviews', '#reviews'], ['Consultations', '#contact']] },
-            { head: 'Office', links: [['1 Hanna St W.', null], ['Windsor, ON N8X 1C7', null], ['519 · 255 · 4382', null], ['info@farhatlaw.ca', 'mailto:info@farhatlaw.ca']] },
+            { head: 'Office', links: [['1 Hanna St W.', 'https://www.google.com/maps?cid=12618145535706963737'], ['Windsor, ON N8X 1C7', 'https://www.google.com/maps?cid=12618145535706963737'], ['519 · 255 · 4382', 'tel:5192554382'], ['info@farhatlaw.ca', 'mailto:info@farhatlaw.ca']] },
             { head: 'Connect', links: [['farhatlaw.ca', 'https://www.farhatlaw.ca'], ['Facebook', 'https://facebook.com/windsorlawyer'], ['rfarhat@farhatlaw.ca', 'mailto:rfarhat@farhatlaw.ca']] },
           ].map(col => (
             <div key={col.head}>
@@ -603,13 +603,12 @@ export default function App() {
   }
 
   return (
-    <div style={{ background: C.black, color: C.white }}>
+    <div className="app-root" style={{ background: C.black, color: C.white }}>
       <Nav />
       <Hero />
-      <Strip />
-      <Practice onSelectMatter={handleSelectMatter} />
-      <QuoteBand />
       <Principal />
+      <QuoteBand />
+      <Practice onSelectMatter={handleSelectMatter} />
       <Reviews />
       <Contact form={form} setForm={setForm} />
       <Footer />
