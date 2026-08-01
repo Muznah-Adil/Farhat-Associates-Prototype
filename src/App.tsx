@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import logoSrc from '@/imports/logo'
-import heroBg from '@/imports/Quote-bg.jpg'
-import realEstateBg from '@/imports/realEstate.jpg'
-import corporateBg from '@/imports/corporate.jpg'
-import litigationBg from '@/imports/litigation.jpg'
+import heroBg from '@/imports/Bg.jpg'
+import quoteBg from '@/imports/Quote-bg.jpg'
+import realEstateBg from '@/imports/Realestate.jpg'
+import corporateBg from '@/imports/Corporate.jpg'
+import litigationBg from '@/imports/Litigation.jpg'
 
 /* ─── design tokens ─── */
 const C = {
@@ -298,7 +299,7 @@ function QuoteBand() {
   return (
     <section style={{
       padding: '170px 0', textAlign: 'center', position: 'relative',
-      background: `radial-gradient(900px 480px at 50% 50%,rgba(255,255,255,.045),transparent 65%),${C.black}`,
+      background: `radial-gradient(900px 480px at 50% 50%,rgba(255,255,255,.045),transparent 65%), linear-gradient(180deg, rgba(5,5,5,.88) 0%, rgba(5,5,5,.82) 50%, rgba(5,5,5,.92) 100%), url(${quoteBg}) center / cover no-repeat`,
     }}>
       <div className="wrap" style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
         <span aria-hidden="true" style={{
