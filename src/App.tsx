@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import logoSrc from '@/imports/logo'
-import heroBg from '@/imports/bg.jpg'
+import heroBg from '@/imports/Quote-bg.jpg'
+import realEstateBg from '@/imports/realEstate.jpg'
+import corporateBg from '@/imports/corporate.jpg'
+import litigationBg from '@/imports/litigation.jpg'
 
 /* ─── design tokens ─── */
 const C = {
@@ -193,12 +196,12 @@ function Strip() {
 
 /* ─── PRACTICE ─── */
 const practices = [
-  { letter: 'R', kicker: 'Purchase · Sale', title: 'Real Estate', body: 'Residential and commercial transactions closed with precision — title, financing, and development matters handled start to finish, communicated without jargon.', cta: 'Discuss a transaction' },
-  { letter: 'C', kicker: 'Formation · Governance · Contracts', title: 'Corporate', body: "Incorporations, shareholder agreements, and commercial contracts — structured deliberately, so your business holds up when it's tested.", cta: 'Structure your business' },
-  { letter: 'L', kicker: 'Property · Commercial · Contract', title: 'Litigation', body: 'Disputes advanced with strategy and restraint — resolved at the table where possible, and pursued to trial when it counts.', cta: 'Resolve a dispute' },
+  { bg: realEstateBg, kicker: 'Purchase · Sale', title: 'Real Estate', body: 'Residential and commercial transactions closed with precision — title, financing, and development matters handled start to finish, communicated without jargon.', cta: 'Discuss a transaction' },
+  { bg: corporateBg, kicker: 'Formation · Governance · Contracts', title: 'Corporate', body: "Incorporations, shareholder agreements, and commercial contracts — structured deliberately, so your business holds up when it's tested.", cta: 'Structure your business' },
+  { bg: litigationBg, kicker: 'Property · Commercial · Contract', title: 'Litigation', body: 'Disputes advanced with strategy and restraint — resolved at the table where possible, and pursued to trial when it counts.', cta: 'Resolve a dispute' },
 ]
 
-function PracticeCard({ letter, kicker, title, body, cta, onSelect }: typeof practices[0] & { onSelect: () => void }) {
+function PracticeCard({ bg, kicker, title, body, cta, onSelect }: typeof practices[0] & { onSelect: () => void }) {
   const [hovered, setHovered] = useState(false)
   return (
     <div
@@ -209,16 +212,9 @@ function PracticeCard({ letter, kicker, title, body, cta, onSelect }: typeof pra
         padding: '72px 44px 64px',
         position: 'relative', overflow: 'hidden',
         minHeight: 520, display: 'flex', flexDirection: 'column',
-        background: hovered ? C.panel2 : 'transparent',
+        background: `linear-gradient(180deg, rgba(5,5,5,${hovered ? '.72' : '.84'}) 0%, rgba(5,5,5,${hovered ? '.82' : '.9'}) 100%), url(${bg}) center / cover no-repeat`,
         transition: 'background .4s',
       }}>
-      <span aria-hidden="true" style={{
-        position: 'absolute', right: -18, top: -46,
-        fontFamily: "'Marcellus',serif", fontSize: 300, lineHeight: 1,
-        color: hovered ? 'rgba(255,255,255,.07)' : C.ghost,
-        userSelect: 'none', pointerEvents: 'none', transition: 'color .4s',
-      }}>{letter}</span>
-
       <span style={{ fontSize: 10, letterSpacing: '0.44em', textTransform: 'uppercase', color: C.greyDim, minHeight: 40, display: 'block', position: 'relative' }}>{kicker}</span>
 
       <h3 style={{ fontSize: 30, margin: '44px 0 20px', position: 'relative', fontFamily: "'Marcellus',serif", fontWeight: 400 }}>
